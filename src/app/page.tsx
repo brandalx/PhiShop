@@ -1,5 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
@@ -18,6 +18,7 @@ export default function Home() {
           <Link href="/prodiucts" className={buttonVariants()}>
             Browse trending products
           </Link>
+          <Button variant="ghost">Our quality promise &rarr;</Button>
         </div>
       </div>
     </MaxWidthWrapper>

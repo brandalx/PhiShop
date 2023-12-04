@@ -1,9 +1,17 @@
 "use client";
 import React from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 import { ShoppingCartIcon } from "lucide-react";
+import { Separator } from "./ui/separator";
 
 const Cart = () => {
+  const itemCount = 1;
   return (
     <Sheet>
       <SheetTrigger className="group -m-2 flex items-center p-2">
@@ -15,6 +23,34 @@ const Cart = () => {
           0
         </span>
       </SheetTrigger>
+      <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
+        <SheetHeader className="space-y-2.5 pr-6">
+          <SheetTitle>Cart (0)</SheetTitle>
+        </SheetHeader>
+        {itemCount > 0 ? (
+          <>
+            <div className="flex w-full flex-col pr-6">
+              {/* todo: cart logic */}
+              cart items
+            </div>
+            <div className="space-y-4 pr-6">
+              <Separator />
+              <div className="space-y-1.5 text-sm">
+                <div className="flex">
+                  <span className="flex-1">Shipping</span>
+                  <span>Free</span>
+                </div>
+                <div className="flex">
+                  <span className="flex-1">Transaction Fee</span>
+                  <span>1</span>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div></div>
+        )}
+      </SheetContent>
     </Sheet>
   );
 };

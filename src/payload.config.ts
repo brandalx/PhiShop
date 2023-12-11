@@ -12,7 +12,9 @@ dotenv.config({
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "",
-
+  routes: {
+    admin: "/sell",
+  },
   admin: {
     bundler: webpackBundler(),
     meta: {

@@ -18,7 +18,7 @@ export default buildConfig({
   admin: {
     bundler: webpackBundler(),
     meta: {
-      titleSuffix: "- PhiShop",
+      titleSuffix: "-PhiShop",
       favicon: "/favicon.ico",
       ogImage: "/thumbnail.jpg",
     },

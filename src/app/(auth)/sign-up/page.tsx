@@ -6,8 +6,28 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const Page = () => {
+  const AuthCredentialsValidation = z.object({
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" }),
+  });
+
+  type TAuthCredentialsValidation = z.infer<typeof AuthCredentialsValidation>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TAuthCredentialsValidation>({
+    resolver: zodResolver(AuthCredentialsValidation),
+  });
+  const onSubmit = ({ email, password }: TAuthCredentialsValidation) => {};
   return (
     <>
       <div className="container relative flex pt-20 flex-col items-center justify-center lg:px-0">
@@ -17,19 +37,25 @@ const Page = () => {
             <h1 className="text-2xl font-bold">Create an account</h1>
           </div>
           <div className="grid gap-6">
-            <form onSubmit={() => {}}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
-                    className={cn({ "focus-visible:ring-red-500": true })}
+                    {...register("email")}
+                    className={cn({
+                      "focus-visible:ring-red-500": errors.email,
+                    })}
                     placeholder="johndoe@gmail.com"
                   />
                 </div>
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="password">Password</Label>
                   <Input
-                    className={cn({ "focus-visible:ring-red-500": true })}
+                    {...register("password")}
+                    className={cn({
+                      "focus-visible:ring-red-500": errors.password,
+                    })}
                     placeholder="Your password"
                   />
                 </div>

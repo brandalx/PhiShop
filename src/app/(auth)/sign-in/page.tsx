@@ -15,10 +15,13 @@ import {
 import { trpc } from "@/trpc/client";
 import { toast } from "sonner";
 import { ZodError } from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Page = () => {
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const isSeller = searchParams.get("as") === "seller";
+  const origin = searchParams.get("origin");
   const {
     register,
     handleSubmit,
@@ -26,7 +29,7 @@ const Page = () => {
   } = useForm<TAuthCredentialsValidation>({
     resolver: zodResolver(AuthCredentialsValidation),
   });
-  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
+  const { mutate, isLoading } = trpc.auth.signIn.useMutation({
     onError: (err) => {
       if (err.data?.code === "CONFLICT") {
         toast.error("This email is already in use. Sign in intead");
@@ -93,6 +96,19 @@ const Page = () => {
                 <Button>Sign In</Button>
               </div>
             </form>
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 flex items-center"
+              >
+                <span className="w-full border-t"></span>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  or
+                </span>
+              </div>
+            </div>
             <div className="flex items-center">
               <hr className="w-full" />
               <div className="w-[20%] text-center">or</div>

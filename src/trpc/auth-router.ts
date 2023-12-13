@@ -35,4 +35,18 @@ export const authRouter = router({
 
       return { success: true, sentToEmail: email };
     }),
+
+  verifyEmail: publicProcedure
+    .input(z.object({ token: z.string() }))
+    .mutation(async ({ input }) => {
+      const { token } = input;
+      const payload = await getPayLoadClient();
+      const isVerified = await payload.verifyEmail({
+        collection: "users",
+        token,
+      });
+      if (!isVerified) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      return { success: true };
+    }),
 });

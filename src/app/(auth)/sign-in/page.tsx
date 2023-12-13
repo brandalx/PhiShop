@@ -29,27 +29,30 @@ const Page = () => {
   } = useForm<TAuthCredentialsValidation>({
     resolver: zodResolver(AuthCredentialsValidation),
   });
-  const { mutate, isLoading } = trpc.auth.signIn.useMutation({
+  const { mutate: signIn, isLoading } = trpc.auth.signIn.useMutation({
     onError: (err) => {
-      if (err.data?.code === "CONFLICT") {
-        toast.error("This email is already in use. Sign in intead");
-        return;
+      if (err.data?.code === "UNAUTHORIZED") {
+        toast.error("Invalid email or password");
       }
-
-      if (err instanceof ZodError) {
-        toast.error(err.issues[0].message);
-        return;
-      }
-
-      toast.error("Something went wrong, please try again");
     },
-    onSuccess: ({ sentToEmail }) => {
-      toast.success(`Verification email sent to ${sentToEmail}`);
-      router.push("/verify-email?to=" + sentToEmail);
+    onSuccess: () => {
+      toast.success("Sign in successfully");
+      router.refresh();
+      if (origin) {
+        router.push(`/${origin}`);
+        return;
+      }
+
+      if (isSeller) {
+        router.push("/sell");
+        return;
+      }
+
+      router.push("/");
     },
   });
   const onSubmit = ({ email, password }: TAuthCredentialsValidation) => {
-    mutate({ email, password });
+    signIn({ email, password });
   };
   return (
     <>

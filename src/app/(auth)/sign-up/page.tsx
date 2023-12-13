@@ -13,6 +13,7 @@ import {
   TAuthCredentialsValidation,
 } from "@/lib/validators/account-credentials-validator";
 import { trpc } from "@/trpc/client";
+import { toast } from "sonner";
 
 const Page = () => {
   const {
@@ -22,7 +23,13 @@ const Page = () => {
   } = useForm<TAuthCredentialsValidation>({
     resolver: zodResolver(AuthCredentialsValidation),
   });
-  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({});
+  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
+    onError: (err) => {
+      if (err.data?.code === "CONFLICT") {
+        toast.error("This email is already in use. Sign in intead");
+      }
+    },
+  });
   const onSubmit = ({ email, password }: TAuthCredentialsValidation) => {
     mutate({ email, password });
   };

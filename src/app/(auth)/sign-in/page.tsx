@@ -56,6 +56,7 @@ const Page = () => {
       }
 
       router.push("/");
+      router.refresh();
     },
   });
   const onSubmit = ({ email, password }: TAuthCredentialsValidation) => {

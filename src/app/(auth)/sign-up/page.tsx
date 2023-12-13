@@ -68,6 +68,11 @@ const Page = () => {
                     })}
                     placeholder="johndoe@gmail.com"
                   />
+                  {errors?.email && (
+                    <p className="text-xs text-red-500">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="password">Password</Label>
@@ -79,6 +84,11 @@ const Page = () => {
                     })}
                     placeholder="Your password"
                   />
+                  {errors?.password && (
+                    <p className="text-xs text-red-500">
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
                 <Button>Sign Up</Button>
               </div>

@@ -10,7 +10,7 @@ const addUser: BeforeChangeHook = ({ req, data }) => {
 const yourOwnAndPurchased: Access = async ({ req }) => {
   const user = req.user as User | null;
 
-  if (user?.role === "admin") return true;
+  if (user?.role === ("admin" as any)) return true;
   if (!user) return false;
 
   const { docs: products } = await req.payload.find({

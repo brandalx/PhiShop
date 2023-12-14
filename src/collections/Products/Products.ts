@@ -1,4 +1,4 @@
-import { PRODUCT_CATEGORIES } from "@/config";
+import { PRODUCT_CATEGORIES } from "../../config/index";
 import { CollectionConfig } from "payload/types";
 
 export const Products: CollectionConfig = {
@@ -54,7 +54,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: "approvedForSale",
-      label: "Product_Status",
+      label: "Product Status",
       type: "select",
       defaultValue: "pending",
       access: {
@@ -74,6 +74,50 @@ export const Products: CollectionConfig = {
         {
           label: "Denied",
           value: "denied",
+        },
+      ],
+    },
+    {
+      name: "priceId",
+      access: {
+        create: () => false,
+        read: () => false,
+        update: () => false,
+      },
+      type: "text",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "stripeId",
+      access: {
+        create: () => false,
+        read: () => false,
+        update: () => false,
+      },
+      type: "text",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "images",
+      type: "array",
+      label: "Product images",
+      minRows: 1,
+      maxRows: 4,
+      required: true,
+      labels: {
+        singular: "Image",
+        plural: "Images",
+      },
+      fields: [
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
         },
       ],
     },

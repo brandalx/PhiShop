@@ -7,7 +7,7 @@ import { Icons } from "./Icons";
 const Footer = () => {
   return (
     <MaxWidthWrapper>
-      <div className=" my-10">
+      <div className=" mt-10 mb-20">
         <div className="grid md:gap-y-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <div className="my-2">

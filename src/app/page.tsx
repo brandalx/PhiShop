@@ -59,6 +59,7 @@ export default function Home() {
         </div>
 
         <ProudctReel
+          query={{ sort: "desc", limit: 4 }}
           title="Brand New"
           subtitle="Brand new subtitle"
           href="/products"

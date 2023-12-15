@@ -1,4 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import ProudctReel from "@/components/ProductReel";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   ArrowDownToLine,
@@ -57,7 +58,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* todo: product list */}
+        <ProudctReel
+          title="Brand New"
+          subtitle="Brand new subtitle"
+          href="/products"
+        />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50">
         <MaxWidthWrapper className="py-20">

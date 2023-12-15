@@ -1,3 +1,4 @@
+import { trpc } from "@/trpc/client";
 import Link from "next/link";
 
 interface ProductReelProps {
@@ -7,6 +8,7 @@ interface ProductReelProps {
 }
 const ProudctReel = (props: ProductReelProps) => {
   const { title, subtitle, href } = props;
+
   return (
     <section className="py-12">
       <div className="md:flex md:items-center md:justify-between mb-4">
@@ -32,6 +34,11 @@ const ProudctReel = (props: ProductReelProps) => {
             Shop the collection <span aria-hidden="true">&rarr;</span>
           </Link>
         ) : null}
+      </div>
+      <div className="relative">
+        <div className="mt-6 flex items-center w-full">
+          <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8"></div>
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
 import React from "react";
-
-const ImageSlider = () => {
+interface ImageSliderProps {
+  urls: string[];
+}
+const ImageSlider = ({ urls }: ImageSliderProps) => {
   return <div>ImageSlider</div>;
 };
 

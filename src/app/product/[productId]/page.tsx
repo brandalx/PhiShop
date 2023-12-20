@@ -1,9 +1,10 @@
 import ImageSlider from "@/components/ImageSlider";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import ProudctReel from "@/components/ProductReel";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { getPayLoadClient } from "@/get-payload";
 import { formatPrice } from "@/lib/utils";
-import { CheckIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { CheckIcon, ChevronLeft, ChevronRight, ShieldIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -107,8 +108,33 @@ const Page = async ({ params }: PageProps) => {
               <ImageSlider urls={validUrls} />
             </div>
           </div>
+          {/* add to card action */}
+          <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
+            <div>
+              <div className="mt-10">
+                <AddToCartButton />
+              </div>
+              <div className="mt-6 text-center">
+                <div className="group inline-flex text-sm text-medium ">
+                  <ShieldIcon
+                    aria-hidden="true"
+                    className="mr-2 h-5 w-5 flex-shrink-0 text-gray-400"
+                  />
+                  <span className="text-muted-foreground hover:text-gray-700">
+                    30 Day Return Guarantee
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <ProudctReel
+        href="/products"
+        query={{ category: product.category, limit: 4 }}
+        title={`Similar ${label}`}
+        subtitle={`Browse similar high quality ${label} just like "${product.name}" `}
+      />
     </MaxWidthWrapper>
   );
 };

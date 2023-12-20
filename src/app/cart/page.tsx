@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { useCart } from "@/hooks/use-cart";
 import { cn, formatPrice } from "@/lib/utils";
+import { trpc } from "@/trpc/client";
 import { Check, Loader2, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +15,15 @@ const Page = () => {
   const { items, removeItem } = useCart();
 
   const router = useRouter();
+
+  const { mutate: createCheckoutSession, isLoading } =
+    trpc.payment.createSession.useMutation({
+      onSuccess: ({ url }) => {
+        if (url) router.push(url);
+      },
+    });
+
+  const productIds = items.map(({ product }) => product.id);
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
   useEffect(() => {
@@ -50,10 +60,10 @@ const Page = () => {
                   className="relative mb-4 h-40 w-40 text-muted-foreground"
                 >
                   <Image
-                    src="https://cdn.dribbble.com/users/2370289/screenshots/6150406/media/6579b4e1f9a6658157cf653538b25a8b.jpg?resize=400x0"
+                    src="/someimage.png"
                     fill
                     loading="eager"
-                    alt="empty shopping cart hippo"
+                    alt="empty shopping cart"
                   />
                 </div>
                 <h3 className="font-semibold text-2xl">Your cart is empty</h3>
@@ -159,7 +169,7 @@ const Page = () => {
 
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <div className="flex items-center text-sm text-muted-foreground">
-                  <span>Transaction Fee</span>
+                  <span>Flat Transaction Fee</span>
                 </div>
                 <div className="text-sm font-medium text-gray-900">
                   {isMounted ? (
@@ -185,7 +195,15 @@ const Page = () => {
             </div>
 
             <div className="mt-6">
-              <Button onClick={() => {}} className="w-full" size="lg">
+              <Button
+                disabled={items.length === 0 || isLoading}
+                onClick={() => createCheckoutSession({ productIds })}
+                className="w-full"
+                size="lg"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
+                ) : null}
                 Checkout
               </Button>
             </div>

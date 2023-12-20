@@ -38,3 +38,4 @@ yarn.lock
 .env*
 media
 product_files
+dist

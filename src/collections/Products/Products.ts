@@ -20,9 +20,11 @@ const syncUser: AfterChangeHook<Product> = async ({ req, doc }) => {
   });
 
   if (fullUser && typeof fullUser === "object") {
+    //@ts-ignore
     const { products } = fullUser;
 
     const allIDs = [
+      //@ts-ignore
       ...(products?.map((product) =>
         typeof product === "object" ? product.id : product
       ) || []),
@@ -38,6 +40,7 @@ const syncUser: AfterChangeHook<Product> = async ({ req, doc }) => {
       collection: "users",
       id: fullUser.id,
       data: {
+        //@ts-ignore
         products: dataToUpdate,
       },
     });
@@ -50,9 +53,11 @@ const isAdminOrHasAccess =
     const user = _user as User | undefined;
 
     if (!user) return false;
+    //@ts-ignore
     if (user.role === "admin") return true;
-
+    //@ts-ignore
     const userProductIDs = (user.products || []).reduce<Array<string>>(
+      //@ts-ignore
       (acc, product) => {
         if (!product) return acc;
         if (typeof product === "string") {

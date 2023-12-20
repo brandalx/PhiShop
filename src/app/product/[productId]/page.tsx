@@ -1,3 +1,4 @@
+import ImageSlider from "@/components/ImageSlider";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { getPayLoadClient } from "@/get-payload";
@@ -43,6 +44,9 @@ const Page = async ({ params }: PageProps) => {
   const label = PRODUCT_CATEGORIES.find(
     ({ value }) => value === product.category
   )?.label;
+  const validUrls = product.images
+    .map(({ image }) => (typeof image === "string" ? image : image.url))
+    .filter(Boolean) as string[];
   return (
     <MaxWidthWrapper className="bg-white">
       <div className="bg-white">
@@ -98,6 +102,11 @@ const Page = async ({ params }: PageProps) => {
             </section>
           </div>
           {/* product images */}
+          <div className="mt-10 lg:col-start-2 lg:row-start-2 lg:mt-0 lg:self-center">
+            <div className="aspect-square rounded-lg">
+              <ImageSlider urls={validUrls} />
+            </div>
+          </div>
         </div>
       </div>
     </MaxWidthWrapper>

@@ -8,6 +8,7 @@ import { paymentRouter } from "./payment-router";
 export const appRouter = router({
   auth: authRouter,
   payment: paymentRouter,
+
   getInfiniteProducts: publicProcedure
     .input(
       z.object({
@@ -21,11 +22,12 @@ export const appRouter = router({
       const { sort, limit, ...queryOpts } = query;
 
       const payload = await getPayLoadClient();
-      const parseQueryOpts: Record<string, { equlas: string }> = {};
+
+      const parsedQueryOpts: Record<string, { equals: string }> = {};
 
       Object.entries(queryOpts).forEach(([key, value]) => {
-        parseQueryOpts[key] = {
-          equlas: value,
+        parsedQueryOpts[key] = {
+          equals: value,
         };
       });
 
@@ -41,13 +43,14 @@ export const appRouter = router({
           approvedForSale: {
             equals: "approved",
           },
-          ...parseQueryOpts,
+          ...parsedQueryOpts,
         },
         sort,
         depth: 1,
         limit,
         page,
       });
+
       return {
         items,
         nextPage: hasNextPage ? nextPage : null,

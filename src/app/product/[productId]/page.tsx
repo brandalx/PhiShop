@@ -5,7 +5,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 interface PageProps {
-  productId: string;
+  params: {
+    productId: string;
+  };
 }
 
 const BREADCRUMPS = [

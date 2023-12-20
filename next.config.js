@@ -6,6 +6,7 @@ const nextConfig = {
       "www.lapa.ninja",
       "lapa.ninja",
       "cdn.dribbble.com",
+      "https://phishop.vercel.app",
     ],
     remotePatterns: [
       {

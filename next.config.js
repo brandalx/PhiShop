@@ -7,15 +7,16 @@ const nextConfig = {
       "lapa.ninja",
       "cdn.dribbble.com",
       "https://phishop.vercel.app",
+      "localhost",
     ],
-    remotePatterns: [
-      {
-        hostname: "localhost",
-        pathname: "**",
-        port: "3000",
-        protocol: "http",
-      },
-    ],
+    // remotePatterns: [
+    //   {
+    //     hostname: "localhost",
+    //     pathname: "**",
+    //     port: "3000",
+    //     protocol: "http",
+    //   },
+    // ],
   },
 };
 

@@ -1,6 +1,8 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { getPayLoadClient } from "@/get-payload";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 interface PageProps {
   productId: string;
@@ -10,7 +12,29 @@ const BREADCRUMPS = [
   { id: 1, name: "Home", href: "/" },
   { id: 2, name: "Products", href: "/products" },
 ];
-const Page = ({ params }: PageProps) => {
+const Page = async ({ params }: PageProps) => {
+  const { productId } = params;
+
+  const payload = await getPayLoadClient();
+
+  const { docs: products } = await payload.find({
+    collection: "products",
+    limit: 1,
+    where: {
+      id: {
+        equals: productId,
+      },
+      approvedForSale: {
+        equals: "approved",
+      },
+    },
+  });
+
+  const [product] = products;
+
+  if (!product) {
+    return notFound();
+  }
   return (
     <MaxWidthWrapper className="bg-white">
       <div className="bg-white">
@@ -34,6 +58,9 @@ const Page = ({ params }: PageProps) => {
                 </li>
               ))}
             </ol>
+            <div className="mt-4">
+              <h1>{product.name}</h1>
+            </div>
           </div>
         </div>
       </div>

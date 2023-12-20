@@ -1,13 +1,11 @@
-//add items
-//remove items
-//clear the cart
-
 import { Product } from "@/payload-types";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+
 export type CartItem = {
   product: Product;
 };
+
 type CartState = {
   items: CartItem[];
   addItem: (product: Product) => void;
@@ -15,20 +13,25 @@ type CartState = {
   clearCart: () => void;
 };
 
-//track of cart items
 export const useCart = create<CartState>()(
   persist(
     (set) => ({
       items: [],
       addItem: (product) =>
         set((state) => {
-          return {
-            items: [...state.items, { product }],
-          };
+          const isProductInCart = state.items.some(
+            (item) => item.product.id === product.id
+          );
+
+          if (!isProductInCart) {
+            return { items: [...state.items, { product }] };
+          }
+
+          return state;
         }),
       removeItem: (id) =>
         set((state) => ({
-          items: state.items.filter((items) => items.product.id !== id),
+          items: state.items.filter((item) => item.product.id !== id),
         })),
       clearCart: () => set({ items: [] }),
     }),

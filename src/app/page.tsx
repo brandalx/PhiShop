@@ -51,7 +51,7 @@ export default function Home() {
             team and totally safe to buy.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6 ">
-            <Link href="/prodiucts" className={buttonVariants()}>
+            <Link href="/products" className={buttonVariants()}>
               Browse trending products
             </Link>
             <Button variant="ghost">Our quality promise &rarr;</Button>

@@ -60,7 +60,7 @@ const Page = () => {
                   className="relative mb-4 h-40 w-40 text-muted-foreground"
                 >
                   <Image
-                    src="/someimage.png"
+                    src="/basket-code.svg"
                     fill
                     loading="eager"
                     alt="empty shopping cart"
@@ -196,7 +196,7 @@ const Page = () => {
 
             <div className="mt-6">
               <Button
-                disabled={items.length === 0 || isLoading}
+                // disabled={items.length === 0 || isLoading}
                 onClick={() => createCheckoutSession({ productIds })}
                 className="w-full"
                 size="lg"

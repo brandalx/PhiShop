@@ -4,7 +4,6 @@ import { TRPCError } from "@trpc/server";
 import { getPayLoadClient } from "../get-payload";
 import { stripe } from "../lib/stripe";
 import type Stripe from "stripe";
-import { Product } from "@/payload-types";
 
 export const paymentRouter = router({
   createSession: privateProcedure
@@ -28,22 +27,20 @@ export const paymentRouter = router({
         },
       });
 
-      const filteredProducts = products.filter((prod: Product) =>
-        Boolean(prod.priceId)
-      );
+      const filteredProducts = products.filter((prod) => Boolean(prod.priceId));
 
       const order = await payload.create({
         collection: "orders",
         data: {
           _isPaid: false,
-          products: filteredProducts.map((prod: Product) => prod.id),
+          products: filteredProducts.map((prod) => prod.id),
           user: user.id,
         },
       });
 
       const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
-      filteredProducts.forEach((product: Product) => {
+      filteredProducts.forEach((product) => {
         line_items.push({
           price: product.priceId!,
           quantity: 1,
@@ -51,7 +48,7 @@ export const paymentRouter = router({
       });
 
       line_items.push({
-        price: "price_1OPJkRHkEDQuZlMdagpqx61S",
+        price: "price_1OCeBwA19umTXGu8s4p2G3aX",
         quantity: 1,
         adjustable_quantity: {
           enabled: false,
